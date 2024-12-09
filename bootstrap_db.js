@@ -16,8 +16,7 @@ async function bootstrap() {
       drop table if exists guest_message;
       create table guest_message (
         id integer primary key not null,
-        message text check(length(message) <= 50) not null,
-        visitor_id text check(length(visitor_id) <= 50) not null, visitor_name text check (length(visitor_name) <= 50) not null,
+        message text check(length(message) <= 250) not null,
         created_at timestamp not null default current_timestamp,
         updated_at timestamp not null default current_timestamp
       );
@@ -75,7 +74,6 @@ async function bootstrap() {
         browser_id integer,
         os_id integer,
         device_id integer,
-        visitor_id text not null,
         referrer text not null,
         user_agent text not null,
         timestamp timestamp default current_timestamp,
@@ -96,7 +94,6 @@ async function bootstrap() {
       drop table if exists session;
       create table session (
         id text primary key not null,
-        visitor_id text not null,
         session_start timestamp not null default current_timestamp,
         session_end timestamp not null default current_timestamp
       );

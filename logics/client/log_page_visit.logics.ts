@@ -1,9 +1,4 @@
-import getFingerprintLogic from "./get_fingerprint.logics"
-
 export default async function logPageVisit(pathname: string) {
-  const fingerprint = await getFingerprintLogic()
-  if (fingerprint === null) return
-
   let sessionId = window.sessionStorage.getItem("session_id")
   if (sessionId === null) {
     sessionId = crypto.randomUUID()
@@ -14,7 +9,6 @@ export default async function logPageVisit(pathname: string) {
     pathname,
     referrer: document.referrer,
     userAgent: navigator.userAgent,
-    visitorId: fingerprint,
     sessionId,
   }
 

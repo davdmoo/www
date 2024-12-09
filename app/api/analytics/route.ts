@@ -14,8 +14,8 @@ export async function POST(request: Request) {
 
   try {
     const json = await request.json()
-    const { pathname, referrer, userAgent, visitorId, sessionId } = json
-    if (!pathname || referrer === undefined || !userAgent || !visitorId || !sessionId) {
+    const { pathname, referrer, userAgent, sessionId } = json
+    if (!pathname || referrer === undefined || !userAgent || !sessionId) {
       throw new ValidationError("Invalid request body")
     }
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       `insert or ignore into browser (name, version) values ('${browser.name}', '${browser.version}');`,
       `insert or ignore into operating_system (name, version) values ('${operatingSystem.name}', '${operatingSystem.version}');`,
       `insert or ignore into device (type, vendor, model) values ('${device.type}', '${device.vendor}', '${device.model}');`,
-      `insert or ignore into session (id, visitor_id) values ('${sessionId}', '${visitorId}')`,
+      `insert or ignore into session (id) values ('${sessionId}')`,
     ])
 
     // query existing/newly added browser, OS, and device to be added into analytic item
@@ -60,8 +60,8 @@ export async function POST(request: Request) {
 
     // check if current visitor is unique
     const uniqueAnalyticQuery = await transaction.execute({
-      sql: `select * from analytic where path_id = ? and visitor_id = ? limit 1`,
-      args: [path.id, visitorId],
+      sql: `select * from analytic where path_id = ? limit 1`,
+      args: [path.id],
     })
     const uniqueAnalyticRow = uniqueAnalyticQuery.rows.at(0)
 
@@ -73,8 +73,8 @@ export async function POST(request: Request) {
     // update path's visit count and create new analytic data
     await transaction.batch([
       {
-        sql: `insert into analytic(path_id, browser_id, os_id, device_id, referrer, user_agent, visitor_id) values(?, ?, ?, ?, ?, ?, ?)`,
-        args: [path.id, existingBrowser!.id, existingOs!.id, existingDevice!.id, referrer, userAgent, visitorId],
+        sql: `insert into analytic(path_id, browser_id, os_id, device_id, referrer, user_agent) values(?, ?, ?, ?, ?, ?)`,
+        args: [path.id, existingBrowser!.id, existingOs!.id, existingDevice!.id, referrer, userAgent],
       },
       {
         sql: `update path set visit_count = ?, unique_visit_count = ? where id = ?`,
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     ])
 
     await transaction.commit()
-    return Response.json({ message: "Success", data: null }, { status: 201 })
+    return new Response(null, { status: 204 })
   } catch (err) {
     if (process.env.NODE_ENV === "production") {
       Sentry.captureException(err)
