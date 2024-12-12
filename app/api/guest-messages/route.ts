@@ -9,8 +9,8 @@ import { NextRequest } from "next/server"
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
-    const { message, visitorId, visitorName, type } = Object.fromEntries(formData)
-    if (!message || !visitorId || !visitorName || !type) throw new ValidationError("Invalid request body")
+    const { message, guestName, type } = Object.fromEntries(formData)
+    if (!message || !guestName || !type) throw new ValidationError("Invalid request body")
 
     // only send an email if type is private; no need to insert to DB
     if (type === MessageType.private) {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
           htmlContent: `<html><head></head><body><p>${message}</p></body></html>`,
           subject: "Personal Site",
           sender: {
-            name: visitorName,
+            name: guestName,
             email: "david.mulyawan97@gmail.com",
           },
           to: [
@@ -44,17 +44,14 @@ export async function POST(request: NextRequest) {
     }
 
     const db = database()
-    const queryResult = await db.execute({
-      sql: `insert into guest_message(message, visitor_id, visitor_name) values(?, ?, ?) returning *`,
-      args: [message.toString(), visitorId.toString(), visitorName.toString()],
+    const insertGuestMessageQuery = await db.execute({
+      sql: `insert into guest_message(message, guest_name) values(?, ?) returning *`,
+      args: [message.toString(), guestName.toString()],
     })
-    const row = queryResult.rows.at(0)
-    if (row === undefined) {
-      throw new Error("Failed creating new message")
-    }
+    const guestMessage = GuestMessage.fromDb(insertGuestMessageQuery.rows.at(0))
+    if (guestMessage === null) throw new Error("Failed creating new message")
 
-    const response = GuestMessage.fromDb(row)
-    return Response.json({ message: "Success", data: response }, { status: 201 })
+    return Response.json({ message: "Success", data: guestMessage }, { status: 201 })
   } catch (err) {
     if (process.env.NODE_ENV === "production") {
       Sentry.captureException(err)
@@ -77,7 +74,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   try {
     const db = database()
-    const queryResult = await db.execute("select * from guest_message order by created_at desc;")
+    const queryResult = await db.execute(`select * from guest_message order by created_at desc`)
 
     const guestMessages = queryResult.rows.map((row) => GuestMessage.fromDb(row))
     return Response.json({ message: "Success", data: guestMessages })

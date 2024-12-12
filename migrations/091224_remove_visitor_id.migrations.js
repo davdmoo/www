@@ -1,5 +1,5 @@
 // WARNING: deprecated
-// add created and updated at timestamp for guest messages
+// remove visitor_id from session, guest_message, and analytic
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const libsql = require("@libsql/client")
@@ -15,13 +15,13 @@ async function migration() {
       begin transaction;
 
       alter table guest_message
-        rename column message to message_old;
-      alter table guest_message
-      add column message text not null check (length(message) <= 250) default '';
-      update guest_message
-        set message = message_old;
-      alter table guest_message
-        drop column message_old;
+        drop column visitor_id;
+
+      alter table analytic
+        drop column visitor_id;
+
+      alter table session
+        drop column visitor_id;
 
       commit;
     `)

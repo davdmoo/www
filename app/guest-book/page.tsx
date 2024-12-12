@@ -1,8 +1,6 @@
 "use client"
 
 import { MessageType } from "@/enums/message_type.enums"
-import ValidationError from "@/errors/validation.errors"
-import getFingerprintLogic from "@/logics/client/get_fingerprint.logics"
 import getGuestMessages from "@/logics/client/get_guest_messages.logics"
 import { FormEvent, RefObject, useEffect, useRef, useState } from "react"
 import PageHeader from "../components/page_header.components"
@@ -12,23 +10,13 @@ export default function GuestBookPage() {
   // form data
   const [message, setMessage] = useState("")
   const [name, setName] = useState("")
-  const [visitorId, setVisitorId] = useState("")
   const [messageType, setMessageType] = useState<MessageType>(MessageType.public)
 
-  const [formDisabled, setFormDisabled] = useState(true)
   const [messages, setMessages] = useState<GuestMessage[]>([])
   const [isSaving, setIsSaving] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
-    // get browser fingerprint on page's first load and only enable the form if getting fp is successful
-    getFingerprintLogic().then((fp) => {
-      if (fp === null) return
-
-      setVisitorId(fp)
-      setFormDisabled(false)
-    })
-
     // get all guest messages data on first load
     getGuestMessages()
       .then((data) => {
@@ -44,7 +32,7 @@ export default function GuestBookPage() {
       event.preventDefault()
       setIsSaving(true)
 
-      const response = await submit(message, visitorId, name, messageType)
+      const response = await submit(message, name, messageType)
       if (response.status !== 201) {
         const jsonResponse = await response.json()
         throw new Error(jsonResponse.message ?? "Couldn't process your request")
@@ -82,7 +70,7 @@ export default function GuestBookPage() {
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="Name"
-          disabled={formDisabled || isSaving}
+          disabled={isSaving}
           className="mb-4 rounded-md p-2"
           required={true}
           maxLength={50}
@@ -97,7 +85,7 @@ export default function GuestBookPage() {
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder="Message"
-          disabled={formDisabled || isSaving}
+          disabled={isSaving}
           className="rounded-md p-2 mb-4"
           required={true}
           maxLength={250}
@@ -130,7 +118,7 @@ export default function GuestBookPage() {
           </label>
         </div>
 
-        <button type="submit" disabled={formDisabled || isSaving} className="p-3 rounded-md font-semibold">
+        <button type="submit" disabled={isSaving} className="p-3 rounded-md font-semibold">
           Submit
         </button>
       </form>
@@ -153,7 +141,7 @@ export default function GuestBookPage() {
 
       {messages.map((msg) => (
         <div key={msg.id} className="flex flex-row space-x-2">
-          <p className="font-semibold text-sm">{msg.visitorName}:</p>
+          <p className="font-semibold text-sm">{msg.guestName}:</p>
           <p className="text-sm break-words overflow-hidden"> {msg.message}</p>
         </div>
       ))}
@@ -161,15 +149,10 @@ export default function GuestBookPage() {
   )
 }
 
-async function submit(message: string, visitorId: string | null, name: string, type: MessageType): Promise<Response> {
-  if (visitorId == null) {
-    throw new ValidationError("Couldn't get browser fingerprint")
-  }
-
+async function submit(message: string, name: string, type: MessageType): Promise<Response> {
   const form = new URLSearchParams()
   form.append("message", message)
-  form.append("visitorId", visitorId)
-  form.append("visitorName", name)
+  form.append("guestName", name)
   form.append("type", type)
 
   const response = await fetch("/api/guest-messages", {

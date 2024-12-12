@@ -1,3 +1,4 @@
+// WARNING: deprecated
 // split user agent into browser, device, and OS and update the analytic's table
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports

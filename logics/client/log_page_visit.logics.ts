@@ -1,9 +1,8 @@
-import getFingerprintLogic from "./get_fingerprint.logics"
-
+/**
+ * 1. attempts to set session_id to sessionStorage if not already exists
+ * 2. sends beacon to /api/analytics to log page visit and log session
+ */
 export default async function logPageVisit(pathname: string) {
-  const fingerprint = await getFingerprintLogic()
-  if (fingerprint === null) return
-
   let sessionId = window.sessionStorage.getItem("session_id")
   if (sessionId === null) {
     sessionId = crypto.randomUUID()
@@ -14,7 +13,6 @@ export default async function logPageVisit(pathname: string) {
     pathname,
     referrer: document.referrer,
     userAgent: navigator.userAgent,
-    visitorId: fingerprint,
     sessionId,
   }
 

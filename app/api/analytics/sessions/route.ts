@@ -1,23 +1,24 @@
-import AnalyticSession from "@/app/models/analytic_session.models"
 import ValidationError from "@/errors/validation.errors"
+import { VISITOR_ID_COOKIE } from "@/middleware"
 import database from "@/utils/database"
 import * as Sentry from "@sentry/nextjs"
+import { NextRequest } from "next/server"
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const { sessionId, visitorId } = await request.json()
-    if (!sessionId || !visitorId) throw new ValidationError("Invalid request body")
+    const visitorId = request.cookies.get(VISITOR_ID_COOKIE)
+    if (!visitorId) throw new ValidationError("Cookie is missing")
+
+    const { sessionId } = await request.json()
+    if (!sessionId) throw new ValidationError("Invalid request body")
 
     const db = database()
-    const newSessionQuery = await db.execute({
+    await db.execute({
       sql: "insert or replace into session (id, visitor_id) values (?, ?)",
-      args: [sessionId, visitorId],
+      args: [sessionId, visitorId.value],
     })
 
-    return Response.json(
-      { message: "Success", data: AnalyticSession.fromDb(newSessionQuery.rows.at(0)!) },
-      { status: 201 }
-    )
+    return new Response(null, { status: 204 })
   } catch (err) {
     if (process.env.NODE_ENV === "production") {
       Sentry.captureException(err)
