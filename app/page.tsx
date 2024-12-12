@@ -55,7 +55,8 @@ export default function Home() {
 
       <h2>Outside of Work</h2>
       <p>
-        I enjoy programming for <Link href="/projects">fun</Link>, playing Dota 2, reading sci-fi books (
+        I enjoy programming for <Link href="/projects">fun</Link>, playing Dota 2, and reading sci-fi books (my favorite
+        being{" "}
         <Link
           href="https://www.goodreads.com/book/show/20518872-the-three-body-problem"
           target="_blank"
@@ -63,9 +64,7 @@ export default function Home() {
         >
           The Three-Body Problem
         </Link>{" "}
-        series was a mind boggling experience), and watching coming of age movies. I also listen to all kinds of music,
-        although I lean towards metal and anything with catchy guitar riffs. To quote some stranger from the internet;{" "}
-        <em>If it slaps, it slaps</em>.
+        series).
       </p>
     </div>
   )

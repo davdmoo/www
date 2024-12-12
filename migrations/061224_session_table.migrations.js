@@ -1,3 +1,4 @@
+// WARNING: deprecated
 // add session table for logging tab-based session
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports

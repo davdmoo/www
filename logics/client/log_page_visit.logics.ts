@@ -1,3 +1,7 @@
+/**
+ * 1. attempts to set session_id to sessionStorage if not already exists
+ * 2. sends beacon to /api/analytics to log page visit and log session
+ */
 export default async function logPageVisit(pathname: string) {
   let sessionId = window.sessionStorage.getItem("session_id")
   if (sessionId === null) {

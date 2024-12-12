@@ -8,8 +8,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ sess
 
     const db = database()
     await db.execute({
-      sql: "update session set session_end = datetime(?) where id = ?",
-      args: [new Date().toISOString(), session_id],
+      sql: "update session set session_end = datetime('now') where public_id = ?",
+      args: [session_id],
     })
 
     return new Response(null, { status: 204 })

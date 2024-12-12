@@ -9,13 +9,6 @@ export default function Analytics() {
 
   useEffect(() => {
     logPageVisit(pathname)
-
-    // set session_id
-    const currentSession = window.sessionStorage.getItem("session_id")
-    if (currentSession === null) {
-      const uuid = crypto.randomUUID()
-      window.sessionStorage.setItem("session_id", uuid)
-    }
   }, [pathname])
 
   // only run on first render

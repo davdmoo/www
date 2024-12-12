@@ -1,3 +1,4 @@
+// WARNING: deprecated
 // remove visitor_id from session, guest_message, and analytic
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports

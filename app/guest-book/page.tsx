@@ -141,7 +141,7 @@ export default function GuestBookPage() {
 
       {messages.map((msg) => (
         <div key={msg.id} className="flex flex-row space-x-2">
-          <p className="font-semibold text-sm">{msg.visitorName}:</p>
+          <p className="font-semibold text-sm">{msg.guestName}:</p>
           <p className="text-sm break-words overflow-hidden"> {msg.message}</p>
         </div>
       ))}
@@ -152,7 +152,7 @@ export default function GuestBookPage() {
 async function submit(message: string, name: string, type: MessageType): Promise<Response> {
   const form = new URLSearchParams()
   form.append("message", message)
-  form.append("visitorName", name)
+  form.append("guestName", name)
   form.append("type", type)
 
   const response = await fetch("/api/guest-messages", {

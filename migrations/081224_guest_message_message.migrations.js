@@ -1,3 +1,4 @@
+// WARNING: deprecated
 // add created and updated at timestamp for guest messages
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports

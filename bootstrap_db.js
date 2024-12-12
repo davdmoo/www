@@ -13,14 +13,6 @@ async function bootstrap() {
     await db.executeMultiple(`
       begin transaction;
 
-      drop table if exists guest_message;
-      create table guest_message (
-        id integer primary key not null,
-        message text check(length(message) <= 250) not null,
-        created_at timestamp not null default current_timestamp,
-        updated_at timestamp not null default current_timestamp
-      );
-
       drop table if exists path;
       create table path (
         id integer primary key not null,
@@ -36,17 +28,13 @@ async function bootstrap() {
       insert into path (name) values ('/projects');
       insert into path (name) values ('/guest-book');
 
-      drop table if exists visitor;
-      create table visitor (
-        id integer primary key not null,
-        fingerprint text check (length(fingerprint) <= 50) not null
-      );
-
       drop table if exists browser;
       create table browser (
         id integer primary key not null,
         name text not null check(length(name) <= 50),
         version text not null check(length(version) <= 50),
+        created_at timestamp not null default current_timestamp,
+        updated_at timestamp not null default current_timestamp,
         unique(name, version)
       );
 
@@ -55,6 +43,8 @@ async function bootstrap() {
         id integer primary key not null,
         name text not null check(length(name) <= 50),
         version text not null check(length(version) <= 50),
+        created_at timestamp not null default current_timestamp,
+        updated_at timestamp not null default current_timestamp,
         unique(name, version)
       );
 
@@ -64,22 +54,21 @@ async function bootstrap() {
         type text not null check(length(type) <= 50),
         vendor text not null check(length(vendor) <= 50),
         model text not null check(length(model) <= 50),
+        created_at timestamp not null default current_timestamp,
+        updated_at timestamp not null default current_timestamp,
         unique(type, vendor, model)
       );
 
-      drop table if exists analytic;
-      create table analytic (
+      drop table if exists visitor;
+      create table visitor (
         id integer primary key not null,
-        path_id integer not null,
-        browser_id integer,
-        os_id integer,
-        device_id integer,
-        referrer text not null,
+        public_id text not null check(length(public_id) <= 50),
         user_agent text not null,
-        timestamp timestamp default current_timestamp,
-        foreign key (path_id)
-          references path (id)
-          on delete cascade
+        browser_id integer not null,
+        os_id integer not null,
+        device_id integer not null,
+        created_at timestamp not null default current_timestamp,
+        updated_at timestamp not null default current_timestamp,
         foreign key (browser_id)
           references browser (id)
           on delete cascade
@@ -91,11 +80,41 @@ async function bootstrap() {
           on delete cascade
       );
 
+      drop table if exists guest_message;
+      create table guest_message (
+        id integer primary key not null,
+        guest_name text check(length(guest_name) <= 50) not null,
+        message text check(length(message) <= 250) not null,
+        created_at timestamp not null default current_timestamp,
+        updated_at timestamp not null default current_timestamp
+      );
+
+      drop table if exists analytic;
+      create table analytic (
+        id integer primary key not null,
+        path_id integer not null,
+        visitor_id integer not null,
+        referrer text not null,
+        timestamp timestamp default current_timestamp,
+        foreign key (path_id)
+          references path (id)
+          on delete cascade
+        foreign key (visitor_id)
+          references visitor (id)
+          on delete cascade
+      );
+
       drop table if exists session;
       create table session (
-        id text primary key not null,
+        id integer primary key not null,
+        public_id text not null check(length(public_id) <= 50),
+        visitor_id integer not null,
         session_start timestamp not null default current_timestamp,
-        session_end timestamp not null default current_timestamp
+        session_end timestamp not null default current_timestamp,
+        unique(public_id),
+        foreign key (visitor_id)
+          references visitor (id)
+          on delete cascade
       );
 
       commit;
