@@ -5,7 +5,7 @@ import Path from "@/app/models/path.models"
 import Visitor from "@/app/models/visitor.models"
 import NotFoundError from "@/errors/not_found.errors"
 import ValidationError from "@/errors/validation.errors"
-import { VISITOR_ID_COOKIE } from "@/middleware"
+import { VISITOR_ID_COOKIE, VISITOR_ID_HEADER } from "@/middleware"
 import database from "@/utils/database"
 import { Transaction } from "@libsql/client"
 import * as Sentry from "@sentry/nextjs"
@@ -27,8 +27,16 @@ export async function POST(request: NextRequest) {
   let transaction: Transaction | undefined
 
   try {
-    const visitorId = request.cookies.get(VISITOR_ID_COOKIE)
-    if (visitorId === undefined) throw new Error("Cookie is missing")
+    let visitorId = request.cookies.get(VISITOR_ID_COOKIE)?.value
+    if (visitorId === undefined) {
+      /**
+       * on first visit the cookie won't be set from client-side, so we need to check the custom header
+       * that was set on middleware
+       * we get the custom header from the request object since the middleware's response becomes the request
+       * in the server-side code
+       */
+      visitorId = request.headers.get(VISITOR_ID_HEADER)!
+    }
 
     const json = await request.json()
     const { pathname, referrer, userAgent, sessionId } = json
@@ -41,7 +49,7 @@ export async function POST(request: NextRequest) {
 
     const existingVisitor = await transaction.execute({
       sql: "select * from visitor where public_id = ?",
-      args: [visitorId.value],
+      args: [visitorId],
     })
 
     let visitor = Visitor.fromDb(existingVisitor.rows.at(0))
@@ -76,7 +84,7 @@ export async function POST(request: NextRequest) {
 
       const createVisitorQuery = await transaction.execute({
         sql: "insert into visitor (public_id, browser_id, os_id, device_id, user_agent) values (?, ?, ?, ?, ?) returning *;",
-        args: [visitorId.value, newBrowser!.id, newOs!.id, newDevice!.id, userAgent],
+        args: [visitorId, newBrowser!.id, newOs!.id, newDevice!.id, userAgent],
       })
       const newVisitor = Visitor.fromDb(createVisitorQuery.rows.at(0))
       if (newVisitor === null) throw new Error("Failed creating new visitor")
