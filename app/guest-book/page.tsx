@@ -1,10 +1,10 @@
 "use client"
 
-import { MessageType } from "@/enums/message_type.enums"
-import getGuestMessages from "@/logics/client/get_guest_messages.logics"
+import { MessageType } from "@/app/lib/enums/message_type.enums"
+import getGuestMessages from "@/app/lib/logics/client/get_guest_messages.logics"
+import GuestMessage from "@/app/lib/models/guest_message.models"
 import { FormEvent, RefObject, useEffect, useRef, useState } from "react"
 import PageHeader from "../components/page_header.components"
-import GuestMessage from "../models/guest_message.models"
 
 export default function GuestBookPage() {
   // form data

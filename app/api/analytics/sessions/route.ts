@@ -1,6 +1,6 @@
-import ValidationError from "@/errors/validation.errors"
+import ValidationError from "@/app/lib/errors/validation.errors"
+import database from "@/app/lib/utils/database"
 import { VISITOR_ID_COOKIE } from "@/middleware"
-import database from "@/utils/database"
 import * as Sentry from "@sentry/nextjs"
 import { NextRequest } from "next/server"
 

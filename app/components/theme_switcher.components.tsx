@@ -1,6 +1,6 @@
 "use client"
 
-import ThemeLogic, { ThemeValue } from "@/logics/client/theme.logics"
+import ThemeLogic, { ThemeValue } from "@/app/lib/logics/client/theme.logics"
 import { useEffect, useState } from "react"
 import MoonIcon from "./moon_icon.components"
 import SunlightIcon from "./sunlight_icon.components"

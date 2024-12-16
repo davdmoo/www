@@ -1,6 +1,6 @@
 "use client"
 
-import logPageVisit from "@/logics/client/log_page_visit.logics"
+import logPageVisit from "@/app/lib/logics/client/log_page_visit.logics"
 import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 

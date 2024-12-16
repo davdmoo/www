@@ -1,4 +1,4 @@
-import EnvError from "@/errors/env.errors"
+import EnvError from "@/app/lib/errors/env.errors"
 import { Client, createClient } from "@libsql/client"
 
 export default function database(): Client {

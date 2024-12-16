@@ -1,8 +1,8 @@
-import GuestMessage from "@/app/models/guest_message.models"
-import { MessageType } from "@/enums/message_type.enums"
-import EnvError from "@/errors/env.errors"
-import ValidationError from "@/errors/validation.errors"
-import database from "@/utils/database"
+import { MessageType } from "@/app/lib/enums/message_type.enums"
+import EnvError from "@/app/lib/errors/env.errors"
+import ValidationError from "@/app/lib/errors/validation.errors"
+import GuestMessage from "@/app/lib/models/guest_message.models"
+import database from "@/app/lib/utils/database"
 import * as Sentry from "@sentry/nextjs"
 import { NextRequest } from "next/server"
 

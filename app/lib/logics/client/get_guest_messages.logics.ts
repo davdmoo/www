@@ -1,5 +1,5 @@
-import GuestMessage from "@/app/models/guest_message.models"
-import BasicResponse from "@/app/types/basic_response.types"
+import GuestMessage from "@/app/lib/models/guest_message.models"
+import BasicResponse from "@/app/lib/types/basic_response.types"
 
 export default async function getGuestMessages(): Promise<GuestMessage[]> {
   const response = await fetch("/api/guest-messages")

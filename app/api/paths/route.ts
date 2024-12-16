@@ -1,6 +1,6 @@
-import Path from "@/app/models/path.models"
-import ValidationError from "@/errors/validation.errors"
-import database from "@/utils/database"
+import ValidationError from "@/app/lib/errors/validation.errors"
+import Path from "@/app/lib/models/path.models"
+import database from "@/app/lib/utils/database"
 
 export async function GET() {
   try {

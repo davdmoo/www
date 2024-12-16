@@ -1,6 +1,6 @@
-import VisitorDetail from "@/app/models/visitor_detail.models"
-import NotFoundError from "@/errors/not_found.errors"
-import database from "@/utils/database"
+import NotFoundError from "@/app/lib/errors/not_found.errors"
+import VisitorDetail from "@/app/lib/models/visitor_detail.models"
+import database from "@/app/lib/utils/database"
 
 export async function GET(request: Request, { params }: { params: Promise<{ visitor_id: string }> }) {
   try {

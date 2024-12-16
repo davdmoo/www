@@ -1,4 +1,4 @@
-import database from "@/utils/database"
+import database from "@/app/lib/utils/database"
 import * as Sentry from "@sentry/nextjs"
 
 // ends the session by updating session_end field
