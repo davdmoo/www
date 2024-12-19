@@ -1,25 +1,24 @@
 import type { Metadata } from "next"
-import localFont from "next/font/local"
+import { Ubuntu } from "next/font/google"
+
 import Link from "next/link"
 import Analytics from "./components/analytics.components"
 import LayoutHeader from "./components/layout_header.components"
 import "./globals.css"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-  preload: false,
-})
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-  preload: false,
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  fallback: ["Arial", "sans-serif"],
 })
 
 export const metadata: Metadata = {
-  title: "/davdmoo",
+  title: {
+    template: "David Mulyawan",
+    default: "David Mulyawan",
+  },
   description:
     "Personal site of David Mulyawan Oktavianus, a software developer specialized in Flutter, React, and Typescript",
   authors: [{ name: "David Mulyawan Oktavianus", url: "https://davdmoo.vercel.app" }],
@@ -32,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <head>
         {process.env.NODE_ENV === "production" ? (
           <script
@@ -43,9 +42,7 @@ export default function RootLayout({
         ) : null}
       </head>
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen flex flex-col justify-between px-4`}
-      >
+      <body className={`${ubuntu.className} antialiased h-screen flex flex-col justify-between px-4`}>
         <Analytics />
         <LayoutHeader />
 
