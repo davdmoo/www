@@ -1,16 +1,20 @@
+"use server"
+
 import { MessageType } from "@/app/lib/enums/message_type.enums"
 import EnvError from "@/app/lib/errors/env.errors"
 import ValidationError from "@/app/lib/errors/validation.errors"
 import GuestMessage from "@/app/lib/models/guest_message.models"
 import database from "@/app/lib/utils/database"
-import * as Sentry from "@sentry/nextjs"
-import { NextRequest } from "next/server"
+import logError from "@/app/lib/utils/error_logger.utils"
+import { revalidatePath } from "next/cache"
 
-export async function POST(request: NextRequest) {
+export default async function sendGuestMessage(formData: FormData) {
   try {
-    const formData = await request.formData()
-    const { message, guestName, type } = Object.fromEntries(formData)
-    if (!message || !guestName || !type) throw new ValidationError("Invalid request body")
+    const guestName = formData.get("name")
+    const message = formData.get("message")
+    const type = formData.get("type")
+
+    if (!message || !guestName) throw new ValidationError("Invalid request body")
 
     // only send an email if type is private; no need to insert to DB
     if (type === MessageType.private) {
@@ -39,8 +43,6 @@ export async function POST(request: NextRequest) {
           "api-key": brevoApiKey,
         },
       })
-
-      return Response.json({ message: "Success", data: null }, { status: 201 })
     }
 
     const db = database()
@@ -51,43 +53,15 @@ export async function POST(request: NextRequest) {
     const guestMessage = GuestMessage.fromDb(insertGuestMessageQuery.rows.at(0))
     if (guestMessage === null) throw new Error("Failed creating new message")
 
-    return Response.json({ message: "Success", data: guestMessage }, { status: 201 })
+    return { success: true, message: "Message has been sent successfully!", error: undefined }
   } catch (err) {
-    if (process.env.NODE_ENV === "production") {
-      Sentry.captureException(err)
+    logError(err)
+    return {
+      success: false,
+      message: "Error while trying to send a message.",
+      error: err?.toString() || "Internal error occurred. Please try again later.",
     }
-
-    let errorMessage = "Internal error occurred. Please try again later."
-    let status = 500
-    if (err instanceof Error) {
-      errorMessage = err.message
-    }
-
-    if (err instanceof ValidationError) {
-      status = 400
-    }
-
-    return Response.json({ message: errorMessage, data: null }, { status: status })
-  }
-}
-
-export async function GET() {
-  try {
-    const db = database()
-    const queryResult = await db.execute(`select * from guest_message order by created_at desc`)
-
-    const guestMessages = queryResult.rows.map((row) => GuestMessage.fromDb(row))
-    return Response.json({ message: "Success", data: guestMessages })
-  } catch (err) {
-    if (process.env.NODE_ENV === "production") {
-      Sentry.captureException(err)
-    }
-
-    let errorMessage = "Internal error occurred. Please try again later."
-    if (err instanceof Error) {
-      errorMessage = err.message
-    }
-
-    return Response.json({ message: errorMessage, data: null }, { status: 500 })
+  } finally {
+    revalidatePath("/guest-book")
   }
 }

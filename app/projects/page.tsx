@@ -1,6 +1,6 @@
+import CodeBlock from "@/app/ui/code_block.components"
+import PageHeader from "@/app/ui/page_header.components"
 import Link from "next/link"
-import CodeBlock from "../components/code_block.components"
-import PageHeader from "../components/page_header.components"
 
 export default function Projects() {
   const htmxCodeSnippet = `

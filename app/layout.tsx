@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Ubuntu } from "next/font/google"
 
+import Analytics from "@/app/ui/analytics.components"
+import LayoutHeader from "@/app/ui/layout_header.components"
 import Link from "next/link"
-import Analytics from "./components/analytics.components"
-import LayoutHeader from "./components/layout_header.components"
 import "./globals.css"
 
 const ubuntu = Ubuntu({

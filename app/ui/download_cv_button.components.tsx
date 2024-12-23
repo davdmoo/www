@@ -1,7 +1,7 @@
 "use client"
 
-import DownloadIcon from "./download_icon.components"
-import TextButton from "./text_button.components"
+import DownloadIcon from "@/app/ui/download_icon.components"
+import TextButton from "@/app/ui/text_button.components"
 
 export default function DownloadCvButton() {
   return (

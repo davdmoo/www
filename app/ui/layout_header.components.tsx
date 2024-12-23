@@ -1,5 +1,5 @@
-import DownloadCvButton from "./download_cv_button.components"
-import ThemeSwitcher from "./theme_switcher.components"
+import DownloadCvButton from "@/app/ui/download_cv_button.components"
+import ThemeSwitcher from "@/app/ui/theme_switcher.components"
 
 export default function LayoutHeader() {
   return (
