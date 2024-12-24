@@ -11,6 +11,7 @@ export default function ThemeSwitcher() {
   useEffect(() => {
     const currentTheme = ThemeLogic.getCurrentTheme()
     setTheme(currentTheme)
+    ThemeLogic.setCurrentTheme(currentTheme)
   }, [])
 
   return (

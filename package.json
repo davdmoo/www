@@ -1,6 +1,6 @@
 {
   "name": "personal-site",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,6 @@
   "dependencies": {
     "@libsql/client": "^0.14.0",
     "@sentry/nextjs": "^8.42.0",
-    "@thumbmarkjs/thumbmarkjs": "^0.16.1",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",

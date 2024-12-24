@@ -1,5 +1,10 @@
 import PageHeader from "@/app/ui/page_header.components"
+import { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Experiences",
+}
 
 export default function WorkSummary() {
   return (
@@ -23,12 +28,11 @@ export default function WorkSummary() {
 
         <ul className="list-disc pl-3">
           <li>
-            Develop, maintain, and deploy a self-service bus ticketing platform using Flutter and Javascript, serving up
-            to tens of thousands of transactions per month in Soekarno-Hatta airport
+            Develop, maintain, and deploy a self-service bus ticketing platform using Flutter and Javascript in
+            Soekarno-Hatta airport
           </li>
           <li>
-            Develop, maintain, and deploy a self-service membership management platform using Flutter and Typescript for
-            FTL gym
+            Develop, maintain, and deploy a self-service membership management platform using Flutter and Typescript
           </li>
           <li>
             Become a core contributor in various Android, web, and backend applications using Flutter, Typescript, and
@@ -40,7 +44,7 @@ export default function WorkSummary() {
           <li>Develop unit tests using Jest</li>
         </ul>
 
-        <p className="mt-3">
+        <p className="mt-3 text-sm">
           <strong>Tech stacks</strong>: Flutter, Typescript, Javascript, Firestore NoSQL, MongoDB, CI/CD with GitHub
           Actions, Firebase Cloud Messaging, Google Cloud Functions, Google Cloud Platform (GCP)
         </p>
@@ -60,7 +64,7 @@ export default function WorkSummary() {
           <li>Integrated Sentry for application error tracking</li>
         </ul>
 
-        <p className="mt-3">
+        <p className="mt-3 text-sm">
           <strong>Tech stacks</strong>: Flutter, Typescript, MongoDB, GitHub Projects, Google Cloud Functions, Google
           Cloud Tasks
         </p>

@@ -1,6 +1,11 @@
 import CodeBlock from "@/app/ui/code_block.components"
 import PageHeader from "@/app/ui/page_header.components"
+import { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "Projects",
+}
 
 export default function Projects() {
   const htmxCodeSnippet = `

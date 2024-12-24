@@ -16,7 +16,7 @@ const ubuntu = Ubuntu({
 
 export const metadata: Metadata = {
   title: {
-    template: "David Mulyawan",
+    template: "%s | David Mulyawan",
     default: "David Mulyawan",
   },
   description:
