@@ -12,6 +12,29 @@ export default function WorkSummary() {
       <PageHeader title="/experience" />
       <div className="flex flex-col items-start w-full">
         <h2>
+          Junior Full Stack Engineer at{" "}
+          <Link
+            href="https://liven.love"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xl md:text-2xl lg:text-2xl"
+          >
+            Liven
+          </Link>
+        </h2>
+        <p className="mb-4">
+          <em>(April 2025 - present)</em>
+        </p>
+
+        <ul className="list-disc pl-3">
+          <li>Currently working on a mall loyalty program at Liven&lsquo;s newly built tech hub in BSD, Indonesia</li>
+        </ul>
+
+        <p className="mt-3 text-sm">
+          <strong>Tech stacks</strong>: Typescript, Next.js, Express, Nest.js, PostgreSQL
+        </p>
+
+        <h2>
           Staff Programmer at{" "}
           <Link
             href="https://qios-id.com"
@@ -23,25 +46,22 @@ export default function WorkSummary() {
           </Link>
         </h2>
         <p className="mb-4">
-          <em>(February 2022 - present)</em>
+          <em>(February 2022 - April 2025)</em>
         </p>
 
         <ul className="list-disc pl-3">
           <li>
-            Develop, maintain, and deploy a self-service bus ticketing platform using Flutter and Javascript in
-            Soekarno-Hatta airport
+            Led the development of a self service bus ticketing application in Soekarno-Hatta international airport
           </li>
+          <li>Led the development of a self service gym membership application for FTL gym</li>
           <li>
-            Develop, maintain, and deploy a self-service membership management platform using Flutter and Typescript
-          </li>
-          <li>
-            Become a core contributor in various Android, web, and backend applications using Flutter, Typescript, and
+            Became a core contributor in various Android, web, and backend applications using Flutter, Typescript, and
             Firebase
           </li>
-          <li>Implement Firebase Cloud Messaging for payment notifications</li>
-          <li>Integrate QRIS and EDC payments</li>
-          <li>Develop integrations with third party systems</li>
-          <li>Develop unit tests using Jest</li>
+          <li>Helped streamlining the self service system by integrating payment with QRIS and EDC</li>
+          <li>Spearheaded error tracking system for existing applications</li>
+          <li>Implemented native Java code for hardware-related use cases using Flutter&rsquo;s platform channel</li>
+          <li>Implemented backend unit tests using Jest</li>
         </ul>
 
         <p className="mt-3 text-sm">
