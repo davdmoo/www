@@ -1,8 +1,8 @@
 "use client"
 
 import ThemeLogic, { ThemeValue } from "@/app/lib/logics/client/theme.logics"
-import MoonIcon from "@/app/ui/moon_icon.components"
-import SunlightIcon from "@/app/ui/sunlight_icon.components"
+import MoonIcon from "@/app/ui/icons/moon_icon.components"
+import SunlightIcon from "@/app/ui/icons/sunlight_icon.components"
 import { useEffect, useState } from "react"
 
 export default function ThemeSwitcher() {

@@ -3,7 +3,8 @@
 import sendGuestMessage from "@/app/lib/actions/send_guest_message.actions"
 import { MessageType } from "@/app/lib/enums/message_type.enums"
 import logError from "@/app/lib/utils/error_logger.utils"
-import { FormEvent, RefObject, useRef, useState } from "react"
+import { FormEvent, RefObject, useContext, useRef, useState } from "react"
+import { KeyboardEventListenerContext } from "../client/keyboard_event_listener.components"
 
 export default function GuestMessageForm() {
   // form data
@@ -12,6 +13,9 @@ export default function GuestMessageForm() {
 
   const [isSaving, setIsSaving] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
+
+  const { changeInputFocus } = useContext(KeyboardEventListenerContext)
+  const handleSetFocus = (value: boolean) => changeInputFocus(value)
 
   const submitForm = async (event: FormEvent<HTMLFormElement>) => {
     setIsSaving(true)
@@ -50,6 +54,8 @@ export default function GuestMessageForm() {
           className="mb-4 rounded-md p-2"
           required={true}
           maxLength={50}
+          onFocus={() => handleSetFocus(true)}
+          onBlur={() => changeInputFocus(false)}
         />
 
         <label htmlFor="message" className="mb-1">
@@ -65,6 +71,8 @@ export default function GuestMessageForm() {
           className="rounded-md p-2 mb-4"
           required={true}
           maxLength={250}
+          onFocus={() => changeInputFocus(true)}
+          onBlur={() => changeInputFocus(false)}
         />
 
         <div

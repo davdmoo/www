@@ -34,6 +34,8 @@ export default function WorkSummary() {
           <strong>Tech stacks</strong>: Typescript, Next.js, Express, Nest.js, PostgreSQL
         </p>
 
+        <hr className="my-6 w-full" />
+
         <h2>
           Staff Programmer at{" "}
           <Link
@@ -71,7 +73,7 @@ export default function WorkSummary() {
 
         <hr className="my-6 w-full" />
 
-        <h2 className="">Freelance Full Stack Developer</h2>
+        <h2 className="">Freelance Software Engineer </h2>
         <ul className="list-disc pl-3">
           <li>Successfully developed 1 project for a client in the retail industry</li>
           <li>Developed a Windows-based invoice and stock management app using Flutter, Typescript, and MongoDB</li>

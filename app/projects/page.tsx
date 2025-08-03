@@ -2,6 +2,7 @@ import CodeBlock from "@/app/ui/code_block.components"
 import PageHeader from "@/app/ui/page_header.components"
 import { Metadata } from "next"
 import Link from "next/link"
+import ProjectLinks from "../ui/project_links.components"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -57,17 +58,11 @@ Start-Process –FilePath "$filePath" –Verb Print
 
         <hr className="my-6 w-full" />
 
-        <Link
-          href="https://slinks.deno.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xl lg:text-2xl md:text-2xl font-semibold"
-        >
-          Slinks
-        </Link>
-        <Link href="https://github.com/davdmoo/slinks" target="_blank" rel="noopener noreferrer" className="mb-2">
-          <em>Code base</em>
-        </Link>
+        <ProjectLinks
+          codeBaseHref="https://github.com/davdmoo/slinks"
+          projectHref="https://slinks.deno.dev"
+          projectTitle="Slinks"
+        />
         <p>
           A fun and simple way for me to explore the{" "}
           <Link href="https://deno.com" target="_blank" rel="noopener noreferrer">
@@ -120,17 +115,11 @@ Start-Process –FilePath "$filePath" –Verb Print
 
         <hr className="my-6 w-full" />
 
-        <Link
-          href="https://dictionary-htmx.deno.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xl lg:text-2xl md:text-2xl font-semibold"
-        >
-          Dictionary
-        </Link>
-        <Link href="https://github.com/davdmoo/dictionary" target="_blank" rel="noopener noreferrer" className="mb-2">
-          <em>Code base</em>
-        </Link>
+        <ProjectLinks
+          projectTitle="Dictionary"
+          codeBaseHref="https://github.com/davdmoo/dictionary"
+          projectHref="https://dictionary-htmx.deno.dev"
+        />
         <p>
           I find myself in constant needs of finding word definitions and wanted a simple way to do so (can always
           Google but that&apos;s no fun, plus this was an excuse to explore HTMX again). Features include integration

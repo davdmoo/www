@@ -24,15 +24,15 @@
   }
 
   a {
-    @apply text-sm md:text-base lg:text-base text-anchor hover:underline hover:text-anchor-visited font-semibold;
+    @apply text-anchor hover:underline hover:text-anchor-visited font-semibold;
   }
 
   a:visited {
-    @apply text-sm md:text-base lg:text-base text-anchor-visited hover:underline;
+    @apply text-anchor-visited hover:underline;
   }
 
   a:active {
-    @apply text-sm md:text-base lg:text-base text-anchor-visited hover:underline;
+    @apply text-anchor-visited hover:underline;
   }
 
   pre {
