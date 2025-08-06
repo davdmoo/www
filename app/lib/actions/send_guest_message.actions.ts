@@ -1,6 +1,5 @@
 "use server"
 
-import { MessageType } from "@/app/lib/enums/message_type.enums"
 import EnvError from "@/app/lib/errors/env.errors"
 import ValidationError from "@/app/lib/errors/validation.errors"
 import GuestMessage from "@/app/lib/models/guest_message.models"
@@ -17,7 +16,7 @@ export default async function sendGuestMessage(formData: FormData) {
     if (!message || !guestName) throw new ValidationError("Invalid request body")
 
     // only send an email if type is private; no need to insert to DB
-    if (type === MessageType.private) {
+    if (type === "on") {
       const brevoApiKey = process.env.BREVO_API_KEY
       if (!brevoApiKey) throw new EnvError("BREVO_API_KEY is not defined")
 
@@ -43,15 +42,15 @@ export default async function sendGuestMessage(formData: FormData) {
           "api-key": brevoApiKey,
         },
       })
+    } else {
+      const db = database()
+      const insertGuestMessageQuery = await db.execute({
+        sql: `insert into guest_message(message, guest_name) values(?, ?) returning *`,
+        args: [message.toString(), guestName.toString()],
+      })
+      const guestMessage = GuestMessage.fromDb(insertGuestMessageQuery.rows.at(0))
+      if (guestMessage === null) throw new Error("Failed creating new message")
     }
-
-    const db = database()
-    const insertGuestMessageQuery = await db.execute({
-      sql: `insert into guest_message(message, guest_name) values(?, ?) returning *`,
-      args: [message.toString(), guestName.toString()],
-    })
-    const guestMessage = GuestMessage.fromDb(insertGuestMessageQuery.rows.at(0))
-    if (guestMessage === null) throw new Error("Failed creating new message")
 
     return { success: true, message: "Message has been sent successfully!", error: undefined }
   } catch (err) {
