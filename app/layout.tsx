@@ -22,8 +22,25 @@ export const metadata: Metadata = {
   },
   description:
     "Personal site of David Mulyawan Oktavianus, a software engineer specialized in Flutter, React, and Typescript",
-  authors: [{ name: "David Mulyawan Oktavianus", url: "https://davdmoo.vercel.app" }],
+  authors: [{ name: "David Mulyawan Oktavianus", url: "https://davdmoo.dev" }],
   creator: "David Mulyawan Oktavianus",
+  keywords: [
+    "software",
+    "software engineer",
+    "David Mulyawan",
+    "David Mulyawan Oktavianus",
+    "Flutter",
+    "React",
+    "Typescript",
+    "Express",
+    "Node.js",
+    "Next.js",
+    "Tailwind CSS",
+    "JavaScript",
+    "Web Development",
+    "Mobile Development",
+    "Full Stack Engineer",
+  ],
 }
 
 export default function RootLayout({
@@ -48,23 +65,23 @@ export default function RootLayout({
         <LayoutHeader />
 
         <KeyboardEventListenerProvider>
-          <main className="flex-grow flex flex-col items-center my-4">
+          <main className="flex-grow flex flex-col items-center my-8">
             <div className="lg:max-w-2xl md:max-w-2xl w-full mb-4">{children}</div>
           </main>
         </KeyboardEventListenerProvider>
 
         <footer className="flex justify-center py-4 px-2 space-x-6">
-          <Link className="text-anchor-alt visited:text-anchor-visited-alt" href="/">
-            /
+          <Link className="text-sm text-anchor-alt visited:text-anchor-visited-alt" href="mailto:hello@davdmoo.dev">
+            email
           </Link>
-          <Link className="text-anchor-alt visited:text-anchor-visited-alt" href="/experience">
-            /experience
+          <Link className="text-sm text-anchor-alt visited:text-anchor-visited-alt" href="https://github.com/davdmoo">
+            github
           </Link>
-          <Link className="text-anchor-alt visited:text-anchor-visited-alt" href="/projects">
-            /projects
-          </Link>
-          <Link className="text-anchor-alt visited:text-anchor-visited-alt" href="/guest-book">
-            /guests
+          <Link
+            className="text-sm text-anchor-alt visited:text-anchor-visited-alt"
+            href="https://linkedin.com/in/david-mulyawan"
+          >
+            linkedin
           </Link>
         </footer>
       </body>

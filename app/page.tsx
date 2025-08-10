@@ -26,13 +26,9 @@ export default function Home() {
       <h2>About</h2>
       <p>
         Hello. My name is David, a software engineer with {`${getExp(firstProExp)}`} of professional{" "}
-        <Link href="/experience">experience</Link>. I specialize in building softwares using Flutter, React, and
-        Typescript.
-      </p>
-      <p>
-        I have always had curiosity toward all things computer related. I used to tinker with my PC; breaking them apart
-        and putting them back together, messing around with Windows installations, and even used Linux at some point
-        before I knew anything about it.
+        <Link href="/experience">experience</Link>. I&apos;d like to think of myself as a generalist - someone who
+        enjoys working across the stacks. Other things I enjoy about software engineering are architecture and database
+        design.
       </p>
 
       <hr className="my-6 w-full" />
@@ -40,21 +36,16 @@ export default function Home() {
       <h2>Career Journey</h2>
       <p>
         My professional experience started at{" "}
-        <Link href="https://qios-id.com" target="_blank" rel="noopener noreferrer">
+        <Link href="https://slinks.deno.dev/uOuVFI" target="_blank" rel="noopener noreferrer">
           Qios
         </Link>
         , a company focused in providing self-service systems to FnB, transportation, and service industries. I became
-        one of the first two programmers here, which was quite the challenge, but I believe it gave me the opportunity
-        to develop unique set of skills and taking full ownership of several impactful projects.
+        one of the first two programmers here, which gave me the opportunity to develop a unique set of skills and
+        taking full ownership on several impactful projects.
       </p>
       <p>
-        One of my proudest achievements was developing a self-service bus ticketing platform that processes tens of
-        thousands of transactions per month. This was my first professional project and also the first one using
-        Flutter; a tool I had to learn during my first month here.
-      </p>
-      <p>
-        Right now I&apos;m working at <Link href="https://liven.love">Liven</Link>&apos;s Indonesia team as a Full Stack
-        Engineer.
+        Right now I&apos;m working at <Link href="https://slinks.deno.dev/bItewC">Liven</Link>&apos;s Indonesia team as
+        a Full Stack Engineer.
       </p>
 
       <hr className="my-6 w-full" />

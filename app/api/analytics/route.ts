@@ -1,4 +1,3 @@
-import NotFoundError from "@/app/lib/errors/not_found.errors"
 import ValidationError from "@/app/lib/errors/validation.errors"
 import Browser from "@/app/lib/models/browser.models"
 import Device from "@/app/lib/models/device.models"
@@ -98,7 +97,9 @@ export async function POST(request: NextRequest) {
       args: [pathname],
     })
     const path = Path.fromDb(pathQuery.rows.at(0))
-    if (path === null) throw new NotFoundError("Path not found")
+    if (path === null) {
+      return new Response(null, { status: 204, statusText: "Path not found" })
+    }
 
     // check if current visitor is unique
     const uniqueAnalyticQuery = await transaction.execute({

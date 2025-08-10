@@ -1,137 +1,49 @@
-import CodeBlock from "@/app/ui/code_block.components"
-import PageHeader from "@/app/ui/page_header.components"
+/* eslint-disable @next/next/no-img-element */
 import { Metadata } from "next"
 import Link from "next/link"
 import ProjectLinks from "../ui/project_links.components"
+import ProjectsLayout from "../ui/projects/project_layout.components"
+import ProjectPreview from "../ui/projects/project_preview.components"
 
 export const metadata: Metadata = {
   title: "Projects",
 }
 
 export default function Projects() {
-  const htmxCodeSnippet = `
-<form hx-get="/dictionaries" hx-target="#response" hx-swap="innerHTML">
-  <input type="text" name="word" id="word-input">
-  <button type="submit">Search</button>
-</form>
-  `
-  const hyperscriptCodeSnippet = `
-<button _="on click hide #alert"> 
-</button>
-  `
-  const powerShellCodeSnippet = `
-Start-Process –FilePath "$filePath" –Verb Print
-  `
-
   return (
-    <div className="flex flex-col items-center">
-      <PageHeader title="/projects" />
+    <ProjectsLayout>
+      <div className="flex flex-col mb-6 w-full">
+        <Link href="/projects/invoice-management" className="flex flex-col">
+          <h2>Invoice Management App</h2>
+        </Link>
+        <p>
+          My first freelance project - a Windows application built using Flutter, Typescript, Cloud Functions, and
+          MongoDB.
+        </p>
+      </div>
 
-      <div className="flex flex-col items-start w-full text-justify">
-        <h2>Invoice Management App</h2>
-        <p>
-          This was a Windows application I built using Flutter and Typescript. Features include authentication, sales
-          and product shipments&apos; invoice generation, along with sales data, customer, product, and stock
-          management, and automated monthly reports.
-        </p>
-        <p>
-          The most challenging part of this one was that this was my first experience handling a freelance project. I
-          had to consult directly with the client, mapping business into project requirements, managing project
-          timelines, and programming the actual software.
-        </p>
-        <p>
-          Fortunately, I have experience in managing and splitting tasks at work using GitHub Projects. This I did since
-          I had found myself being constantly overwhelmed by unclear requirements and tasks.
-        </p>
-        <p>
-          The second most challenging part was printing hard copied invoices using dot matrix printers - of which I had
-          no experience doing. In the end, what I did was generating the invoice as HTML on the server, converting it
-          into PDF, and then sending a PowerShell command to print using the default PDF reader.
-        </p>
-        <p>
-          All in all, I learned a lot in managing project timelines, creating and managing database backups, re-learned
-          database migrations, and, of course, time management, since I had to work on the project outside of working
-          hours.
-        </p>
+      <div className="flex flex-col mb-6 w-full">
+        <Link href="/projects/finance-tracker" className="flex flex-col">
+          <h2>Finance Tracker App</h2>
+        </Link>
+        <p>A Flutter app for tracking finances which works offline.</p>
+      </div>
 
-        <CodeBlock codeSnippet={powerShellCodeSnippet} language="PowerShell" />
+      <div className="flex flex-col mb-6 w-full">
+        <ProjectLinks projectTitle="Slinks" projectSlugHref="/projects/slinks" projectHref="https://slinks.deno.dev" />
+        <p>A simple link shortener built using Deno, HTMX, and SQLite.</p>
+        <ProjectPreview iframeSrc="https://slinks.deno.dev" />
+      </div>
 
-        <hr className="my-6 w-full" />
-
-        <ProjectLinks
-          codeBaseHref="https://github.com/davdmoo/slinks"
-          projectHref="https://slinks.deno.dev"
-          projectTitle="Slinks"
-        />
-        <p>
-          A fun and simple way for me to explore the{" "}
-          <Link href="https://deno.com" target="_blank" rel="noopener noreferrer">
-            Deno
-          </Link>{" "}
-          runtime,{" "}
-          <Link href="https://htmx.org" target="_blank" rel="noopener noreferrer">
-            HTMX
-          </Link>
-          , and{" "}
-          <Link href="https://hyperscript.org" target="_blank" rel="noopener noreferrer">
-            Hyperscript
-          </Link>
-          . Features include creating short links, downloading URL as QR code, and light/dark modes.
-        </p>
-        <p>
-          Deno is a JS runtime which has the tagline &quot;Uncomplicate JavaScript&quot;. And I think it did just that -
-          at least in my simple project. Not having to deal with configuring code formatters, linters, and having a
-          relatively concise code base was very nice!
-        </p>
-        <p>
-          HTMX is a different take on what I am used to seeing/building in terms of clients and servers&apos;
-          interactions. I learned about how REST was originally designed to{" "}
-          <Link
-            href="https://htmx.org/essays/how-did-rest-come-to-mean-the-opposite-of-rest/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            work
-          </Link>
-          , re-learned HTML forms, and how HTML responses are actually{" "}
-          <Link href="https://htmx.org/essays/hypermedia-apis-vs-data-apis/" target="_blank" rel="noopener noreferrer">
-            self-documenting
-          </Link>{" "}
-          codes.
-        </p>
-        <p>
-          HTMX creator&apos;s{" "}
-          <Link href="https://htmx.org/essays" target="_blank" rel="noopener noreferrer">
-            essays
-          </Link>{" "}
-          is a great source of tech reads. Especially his essay on{" "}
-          <Link href="https://grugbrain.dev/" target="_blank" rel="noopener noreferrer">
-            simplicity
-          </Link>
-          .
-        </p>
-
-        <CodeBlock codeSnippet={hyperscriptCodeSnippet} language="//hyperscript" />
-
-        <hr className="my-6 w-full" />
-
+      <div className="flex flex-col mb-6 w-full">
         <ProjectLinks
           projectTitle="Dictionary"
-          codeBaseHref="https://github.com/davdmoo/dictionary"
+          projectSlugHref="/projects/dictionary"
           projectHref="https://dictionary-htmx.deno.dev"
         />
-        <p>
-          I find myself in constant needs of finding word definitions and wanted a simple way to do so (can always
-          Google but that&apos;s no fun, plus this was an excuse to explore HTMX again). Features include integration
-          with third party{" "}
-          <Link href="https://dictionaryapi.dev/" target="_blank" rel="noopener noreferrer" className="mb-4">
-            API
-          </Link>{" "}
-          and managing audio playback using vanilla Javascript.
-        </p>
-
-        <CodeBlock codeSnippet={htmxCodeSnippet} language="htmx" />
+        <p>A simple dictionary built using vanilla Javascript and HTMX.</p>
+        <ProjectPreview iframeSrc="https://dictionary-htmx.deno.dev" />
       </div>
-    </div>
+    </ProjectsLayout>
   )
 }

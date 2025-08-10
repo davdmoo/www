@@ -27,7 +27,7 @@ export default function WorkSummary() {
         </p>
 
         <ul className="list-disc pl-3">
-          <li>Currently working on a mall loyalty program at Liven&lsquo;s newly built tech hub in BSD, Indonesia</li>
+          <li>Currently working on a mall loyalty program at Liven&lsquo;s newly built tech hub in Indonesia</li>
         </ul>
 
         <p className="mt-3 text-sm">
