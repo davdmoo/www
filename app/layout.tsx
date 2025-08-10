@@ -71,7 +71,7 @@ export default function RootLayout({
         </KeyboardEventListenerProvider>
 
         <footer className="flex justify-center py-4 px-2 space-x-6">
-          <Link className="text-sm text-anchor-alt visited:text-anchor-visited-alt" href="mailto:hello@davdmoo.dev">
+          <Link className="text-sm text-anchor-alt visited:text-anchor-visited-alt" href="mailto:dm@davdmoo.dev">
             email
           </Link>
           <Link className="text-sm text-anchor-alt visited:text-anchor-visited-alt" href="https://github.com/davdmoo">
